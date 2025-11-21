@@ -9,6 +9,7 @@
   </head>
   <body>
     <h1>Home page</h1>
+
     <p>Total books: {{ num_book }}</p>
     <p>num auther: {{ num_author }}</p>
     <p>Available books: {{ num_book_instance_available }}</p>
@@ -16,10 +17,20 @@
     {% if request.user.is_authenticated %}
     <p>you are logged in</p>
     <p>welcom : {{ request.user.username|title }}</p>
+
+    <!-- زر إضافة كتاب -->
+    <p><a href="{% url 'create_book' %}">create book</a></p>
+
+    <form action="{% url 'create_book' %}" method="get">
+      <input type="submit" value="إضافة كتاب" />
+    </form>
+    <br />
+    <!-- زر تسجيل الخروج -->
     <form action="{% url 'logout' %}?next=/accounts/login" method="post">
       {% csrf_token %}
       <input type="submit" value="log out" />
     </form>
+
     {% else %}
     <p>you are logged out</p>
     <a href="{% url 'login' %}?next={{request.path}}">log in</a>

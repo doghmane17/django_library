@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from . import models
 from django.views import generic
@@ -9,6 +9,8 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 # Create your views here.
+
+
 @login_required
 def index(request):
     num_book = models.Book.objects.all().count()
@@ -26,7 +28,7 @@ def index(request):
 class BookCreate(LoginRequiredMixin,generic.CreateView): 
     model = models.Book
     fields = '__all__'  
-    success_url = '/cataloge'  
+    success_url = reverse_lazy('index')
     template_name = 'create.html'
 
 class Register(generic.CreateView): 
